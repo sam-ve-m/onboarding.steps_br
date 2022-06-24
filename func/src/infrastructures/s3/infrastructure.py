@@ -1,10 +1,9 @@
-# OUTSIDE LIBRARIES
-import aioboto3
 from contextlib import asynccontextmanager
+
+import aioboto3
+from decouple import config
 from etria_logger import Gladsheim
 
-# Sphinx
-from decouple import config
 from src.domain.exceptions.model import InternalServerError
 
 

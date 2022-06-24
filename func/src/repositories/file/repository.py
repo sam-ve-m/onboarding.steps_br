@@ -1,28 +1,15 @@
-# STANDARD LIBS
 from enum import Enum
 from typing import Optional
 
 from src.domain.enums.file.term_file import TermsFileType
 from src.domain.enums.file.user_file import UserFileType
-
-# SPHINX
 from src.domain.exceptions.model import InternalServerError
 from src.infrastructures.s3.infrastructure import S3Infrastructure
-from src.repositories.cache.repository import RepositoryRedis
-
-
-# from src.core.interfaces.repositories.file_repository.interface import IFile
-
-
-# OUTSIDE LIBRARIES
 
 
 class FileRepository:
-
     infra = S3Infrastructure
-    cache = RepositoryRedis
 
-    # This dict keys must be TermsFileType, UserFileType constants
     _file_extension_by_file_type = {
         "user_selfie": ".jpg",
         "document_front": ".jpg",

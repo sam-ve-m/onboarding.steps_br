@@ -1,7 +1,6 @@
 from typing import List
 
 from pydantic import BaseModel, constr, validator
-
 from src.domain.enums.region.enum import Region
 
 

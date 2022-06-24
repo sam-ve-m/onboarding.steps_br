@@ -21,10 +21,7 @@ async def get_onboarding_step_br(request: Request = request) -> Response:
         if heimdall_status != HeimdallStatusResponses.SUCCESS:
             raise UnauthorizedError()
 
-        # unique_id = jwt_content["decoded_jwt"]["user"]["unique_id"]
-        payload = {
-            "x-thebes-answer": jwt_content,
-        }
+        payload = jwt_content["decoded_jwt"]
         result = await OnboardingSteps.onboarding_user_current_step_br(payload)
 
         response = ResponseModel(
@@ -34,14 +31,6 @@ async def get_onboarding_step_br(request: Request = request) -> Response:
             message="Success",
         ).build_http_response(status=HTTPStatus.OK)
         return response
-
-    # except ValueError as ex:
-    #     message = "Invalid parameters"
-    #     Gladsheim.error(error=ex, message=message)
-    #     response = ResponseModel(
-    #         success=False, code=InternalCode.INVALID_PARAMS, message=message
-    #     ).build_http_response(status=HTTPStatus.BAD_REQUEST)
-    #     return response
 
     except UnauthorizedError as ex:
         message = "JWT invalid or not supplied"
