@@ -1,0 +1,6 @@
+echo "WARNING: REMOVING FISSION FUNCTION AND CONFIGURATIONS!"
+echo "- Removing Fission HTTP trigger..."; fission httptrigger delete --function $FISSION_FUNCTION_NAME || echo "ERROR: Failed to remove HTTP trigger. [CONTINUING SCRIPT]"
+echo "- Removing Fission function..."; fission fn delete --name $FISSION_FUNCTION_NAME || echo "ERROR: Failed to remove function. [CONTINUING SCRIPT]"
+echo "- Removing Fission environment..."; fission env delete --name $FISSION_ENVIRONMENT_NAME || echo "ERROR: Failed to remove environment. [CONTINUING SCRIPT]"
+echo "- Removing Fission specs folder"; rm -rf specs/ || echo "ERROR: Failed to remove specs folder. [CONTINUING SCRIPT]"
+echo "FISSION REMOVED!"
