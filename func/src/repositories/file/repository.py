@@ -31,7 +31,7 @@ class FileRepository:
     @classmethod
     async def user_file_exists(
         cls, file_type: UserFileType, unique_id: str, bucket_name: str
-    ):
+    ) -> bool:
         prefix = await cls._resolve_user_path(unique_id=unique_id, file_type=file_type)
         file_name = file_type.value
         file_extension = cls._get_file_extension_by_type(file_type=file_type)
