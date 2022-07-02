@@ -39,7 +39,7 @@ class S3Infrastructure:
             async with session.resource("s3") as s3_resource:
                 yield s3_resource
         except Exception as ex:
-            message = "error trying to get s3 client"
+            message = "error trying to get s3 resource"
             Gladsheim.error(error=ex, message=message)
             raise ex
 

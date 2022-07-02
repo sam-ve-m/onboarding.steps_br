@@ -1,5 +1,7 @@
 from enum import Enum
 
+from etria_logger import Gladsheim
+
 from src.domain.enums.file.selfie_file import UserSelfie
 from src.domain.enums.file.term_file import UserTerms
 from src.domain.enums.file.user_file import UserDocument
@@ -36,7 +38,13 @@ class FileRepository:
             if file_type.value not in valid_files:
                 raise InvalidFileType("files.error")
 
-        except Exception as error:
+        except Exception as ex:
+            message = "invalid file type passed to the function"
+            Gladsheim.error(
+                error=ex,
+                message=message,
+                file_type=file_type
+            )
             raise InvalidFileType("files.error")
 
     @staticmethod

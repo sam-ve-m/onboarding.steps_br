@@ -1,7 +1,8 @@
 from enum import Enum
-from unittest.mock import AsyncMock
+from unittest.mock import AsyncMock, patch
 
 import pytest
+from etria_logger import Gladsheim
 from pytest import mark
 
 from src.domain.enums.file.user_file import UserDocument
@@ -92,12 +93,14 @@ def test_validate_file_type():
     assert result is None
 
 
-def test_validate_file_type_exception():
+@patch.object(Gladsheim, "error")
+def test_validate_file_type_exception(etria_mock):
     class EnumDummy(Enum):
         DUMMY = "dummy"
 
     with pytest.raises(InvalidFileType):
         result = FileRepository._validate_file_type(EnumDummy.DUMMY)
+    assert etria_mock.called
 
 
 @mark.asyncio
