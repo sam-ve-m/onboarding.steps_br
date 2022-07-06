@@ -1,0 +1,3 @@
+-r requirements.txt
+pytest-asyncio
+Werkzeug==2.1.2
