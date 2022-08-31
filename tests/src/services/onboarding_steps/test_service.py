@@ -31,6 +31,7 @@ build_return_dummy_all_true = {
     "document_validator": True,
     "data_validation": True,
     "electronic_signature": True,
+    "finished": True,
     "current_step": "finished",
 }
 build_return_dummy_all_false = {
@@ -41,6 +42,7 @@ build_return_dummy_all_false = {
     "document_validator": False,
     "data_validation": False,
     "electronic_signature": False,
+    "finished": False,
     "current_step": "suitability",
 }
 
