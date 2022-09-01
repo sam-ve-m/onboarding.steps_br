@@ -85,6 +85,10 @@ class OnboardingStepBuilder:
             self.__step += 1
         return eletronic_signature_step
 
+    def onboarding_is_finished(self) -> bool:
+        is_finished = self.is_current_step(OnboardingStepsEnum.FINISHED)
+        return is_finished
+
     async def build(self, selfie_exists: bool, document_exists: bool) -> dict:
         onboarding_steps = {
             OnboardingStepsEnum.SUITABILITY.value: self.user_suitability_step(),
@@ -96,6 +100,7 @@ class OnboardingStepBuilder:
             ),
             OnboardingStepsEnum.DATA_VALIDATION.value: self.user_data_validation_step(),
             OnboardingStepsEnum.ELECTRONIC_SIGNATURE.value: self.user_electronic_signature_step(),
+            OnboardingStepsEnum.FINISHED.value: self.onboarding_is_finished(),
             OnboardingStepsEnum.CURRENT.value: self.get_current_step().value,
         }
 
