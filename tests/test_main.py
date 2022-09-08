@@ -1,14 +1,20 @@
+import logging.config
 from unittest.mock import patch
 
-from etria_logger import Gladsheim
-from flask import Flask
-from heimdall_client.bifrost import Heimdall
-from heimdall_client.bifrost import HeimdallStatusResponses
-from pytest import mark
+from decouple import RepositoryEnv, Config
 from werkzeug.test import Headers
+from flask import Flask
+from pytest import mark
 
-from main import get_onboarding_step_br
-from src.services.onboarding_steps.service import OnboardingSteps
+with patch.object(RepositoryEnv, "__init__", return_value=None):
+    with patch.object(Config, "__init__", return_value=None):
+        with patch.object(Config, "__call__"):
+            with patch.object(logging.config, "dictConfig"):
+                from etria_logger import Gladsheim
+                from heimdall_client.bifrost import Heimdall
+                from heimdall_client.bifrost import HeimdallStatusResponses
+                from main import get_onboarding_step_br
+                from src.services.onboarding_steps.service import OnboardingSteps
 
 decoded_jwt_ok = {
     "is_payload_decoded": True,
