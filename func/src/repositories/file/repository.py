@@ -19,7 +19,6 @@ class FileRepository:
         cls._validate_file_type(file_type=file_type)
         prefix = await cls._resolve_user_path(unique_id=unique_id, file_type=file_type)
 
-        objects = None
         async with cls.infra.get_resource() as s3_resource:
             bucket = await s3_resource.Bucket(bucket_name)
             async for s3_object in bucket.objects.filter(Prefix=prefix):

@@ -13,7 +13,7 @@ class OnboardingFraudStatusEnum(Enum):
         ) or (
             self == OnboardingFraudStatusEnum.APPROVED and
             other != OnboardingFraudStatusEnum.APPROVED
-        ):
+        ) or (self == other):
             return False
         return True
 
@@ -22,8 +22,8 @@ class OnboardingFraudStatusEnum(Enum):
             self == OnboardingFraudStatusEnum.REPROVED and
             other != OnboardingFraudStatusEnum.REPROVED
         ) or (
-            self == OnboardingFraudStatusEnum.APPROVED and
-            other != OnboardingFraudStatusEnum.APPROVED
-        ):
-            return True
-        return False
+            self != OnboardingFraudStatusEnum.APPROVED and
+            other == OnboardingFraudStatusEnum.APPROVED
+        ) or (self == other):
+            return False
+        return True

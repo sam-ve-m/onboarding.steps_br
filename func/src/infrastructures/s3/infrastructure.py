@@ -23,7 +23,7 @@ class S3Infrastructure:
     @asynccontextmanager
     async def get_client(cls):
         try:
-            session = await S3Infrastructure._get_session()
+            session = await cls._get_session()
             async with session.client("s3") as s3_client:
                 yield s3_client
         except Exception as ex:
@@ -35,7 +35,7 @@ class S3Infrastructure:
     @asynccontextmanager
     async def get_resource(cls):
         try:
-            session = await S3Infrastructure._get_session()
+            session = await cls._get_session()
             async with session.resource("s3") as s3_resource:
                 yield s3_resource
         except Exception as ex:
@@ -47,9 +47,8 @@ class S3Infrastructure:
     @asynccontextmanager
     async def get_bucket(cls, bucket_name: str):
         try:
-            if cls.session is None:
-                cls.session = aioboto3.Session()
-            async with cls.session.resource(
+            session = await cls._get_session()
+            async with session.resource(
                 "s3",
                 aws_access_key_id=config("AWS_ACCESS_KEY_ID"),
                 aws_secret_access_key=config("AWS_SECRET_ACCESS_KEY"),
