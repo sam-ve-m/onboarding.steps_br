@@ -1,4 +1,5 @@
-from src.domain.enums.caf.status import CAFStatus
+from src.domain.enums.fraud.onboarding_steps import OnboardingFraudEnum
+from src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
 from src.domain.enums.onboarding_steps.onboarding_steps import OnboardingStepsEnum
 from src.domain.user.model import User
 
@@ -89,6 +90,24 @@ class OnboardingStepBuilder:
         is_finished = self.is_current_step(OnboardingStepsEnum.FINISHED)
         return is_finished
 
+    def get_bureaux_status(self) -> OnboardingFraudStatusEnum:
+        return max(
+            self.__user.cpf_validation_status,
+            self.__user.score_validation_status,
+        )
+
+    def get_blocklist_status(self) -> OnboardingFraudStatusEnum:
+        return self.__user.blocklist_validation_status
+
+    @staticmethod
+    def get_is_approved(anti_fraud: dict) -> OnboardingFraudStatusEnum:
+        status = OnboardingFraudStatusEnum.APPROVED
+        for fraud_status in anti_fraud.values():
+            if fraud_status == OnboardingFraudStatusEnum.REPROVED:
+                return OnboardingFraudStatusEnum.REPROVED
+            status = max(status, fraud_status)
+        return status
+
     async def build(self, selfie_exists: bool, document_exists: bool) -> dict:
         onboarding_steps = {
             OnboardingStepsEnum.SUITABILITY.value: self.user_suitability_step(),
@@ -103,9 +122,10 @@ class OnboardingStepBuilder:
             OnboardingStepsEnum.FINISHED.value: self.onboarding_is_finished(),
             OnboardingStepsEnum.CURRENT.value: self.get_current_step().value,
         }
-
-        bureau_status = self.__user.get_bureau_status()
-        if bureau_status == CAFStatus.REFUSED.value:
-            onboarding_steps[OnboardingStepsEnum.CURRENT.value] = bureau_status
-
+        anti_fraud = {
+            OnboardingFraudEnum.BUREAU_STATUS.value: self.get_bureaux_status().value,
+            OnboardingFraudEnum.BLOCKLIST.value: self.get_blocklist_status().value,
+        }
+        anti_fraud[OnboardingFraudEnum.STATUS.value] = self.get_is_approved(anti_fraud)
+        onboarding_steps[OnboardingFraudEnum.OBJECT_WRAP_NAME.value] = anti_fraud
         return onboarding_steps

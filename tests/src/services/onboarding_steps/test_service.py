@@ -33,6 +33,11 @@ build_return_dummy_all_true = {
     "electronic_signature": True,
     "finished": True,
     "current_step": "finished",
+    "anti_fraud": {
+        "bureau_status": "pending", 
+        "blocklist": "pending", 
+        "status": "pending"
+    }
 }
 build_return_dummy_all_false = {
     "suitability": False,
@@ -44,6 +49,11 @@ build_return_dummy_all_false = {
     "electronic_signature": False,
     "finished": False,
     "current_step": "suitability",
+    "anti_fraud": {
+        "bureau_status": "pending",
+        "blocklist": "pending",
+        "status": "pending"
+    }
 }
 
 
