@@ -67,10 +67,6 @@ def test_has_complementary_data_false():
     assert User.has_complementary_data(fake_instance) is False
 
 
-def test_has_document_validated_true():
-    assert User.has_document_validated(fake_instance) is True
-
-
 def test_has_validated_data_true():
     fake_instance._User__bureau_status_validated = True
     assert User.has_validated_data(fake_instance) is True
