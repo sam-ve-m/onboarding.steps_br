@@ -99,10 +99,10 @@ class OnboardingStepBuilder:
     def get_blocklist_status(self) -> OnboardingFraudStatusEnum:
         return self.__user.blocklist_validation_status
 
-    @staticmethod
-    def get_is_approved(anti_fraud: dict) -> OnboardingFraudStatusEnum:
+    def get_is_approved(self) -> OnboardingFraudStatusEnum:
         status = OnboardingFraudStatusEnum.APPROVED
-        for fraud_status in anti_fraud.values():
+        anti_fraud_validations = [self.get_bureaux_status(), self.get_blocklist_status()]
+        for fraud_status in anti_fraud_validations:
             if fraud_status == OnboardingFraudStatusEnum.REPROVED:
                 return OnboardingFraudStatusEnum.REPROVED
             status = max(status, fraud_status)
@@ -121,11 +121,6 @@ class OnboardingStepBuilder:
             OnboardingStepsEnum.ELECTRONIC_SIGNATURE.value: self.user_electronic_signature_step(),
             OnboardingStepsEnum.FINISHED.value: self.onboarding_is_finished(),
             OnboardingStepsEnum.CURRENT.value: self.get_current_step().value,
+            OnboardingFraudEnum.OBJECT_WRAP_NAME.value: self.get_is_approved().value,
         }
-        anti_fraud = {
-            OnboardingFraudEnum.BUREAU_STATUS.value: self.get_bureaux_status().value,
-            OnboardingFraudEnum.BLOCKLIST.value: self.get_blocklist_status().value,
-        }
-        anti_fraud[OnboardingFraudEnum.STATUS.value] = self.get_is_approved(anti_fraud)
-        onboarding_steps[OnboardingFraudEnum.OBJECT_WRAP_NAME.value] = anti_fraud
         return onboarding_steps
