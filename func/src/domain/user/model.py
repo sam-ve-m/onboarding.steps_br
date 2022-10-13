@@ -33,16 +33,6 @@ class User:
         has_complementary_data = marital
         return has_complementary_data
 
-    def has_document_validated(self) -> bool:
-        bureau_status = self.__bureau_status is not None
-        bureau_status_is_different_from_document = (
-            self.__bureau_status != CAFStatus.DOCUMENT.value
-        )
-        has_document_validated = (
-            bureau_status and bureau_status_is_different_from_document
-        )
-        return has_document_validated
-
     def has_validated_data(self) -> bool:
         has_validated_data = self.__bureau_status_validated is not None
         return has_validated_data
