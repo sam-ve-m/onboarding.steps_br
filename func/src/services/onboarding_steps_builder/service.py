@@ -1,4 +1,5 @@
-from src.domain.enums.caf.status import CAFStatus
+from src.domain.enums.fraud.onboarding_steps import OnboardingFraudEnum
+from src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
 from src.domain.enums.onboarding_steps.onboarding_steps import OnboardingStepsEnum
 from src.domain.user.model import User
 
@@ -89,6 +90,24 @@ class OnboardingStepBuilder:
         is_finished = self.is_current_step(OnboardingStepsEnum.FINISHED)
         return is_finished
 
+    def get_bureaux_status(self) -> OnboardingFraudStatusEnum:
+        return max(
+            self.__user.cpf_validation_status,
+            self.__user.score_validation_status,
+        )
+
+    def get_blocklist_status(self) -> OnboardingFraudStatusEnum:
+        return self.__user.blocklist_validation_status
+
+    def get_is_approved(self) -> OnboardingFraudStatusEnum:
+        status = OnboardingFraudStatusEnum.APPROVED
+        anti_fraud_validations = [self.get_bureaux_status(), self.get_blocklist_status()]
+        for fraud_status in anti_fraud_validations:
+            if fraud_status == OnboardingFraudStatusEnum.REPROVED:
+                return OnboardingFraudStatusEnum.REPROVED
+            status = max(status, fraud_status)
+        return status
+
     async def build(self, selfie_exists: bool, document_exists: bool) -> dict:
         onboarding_steps = {
             OnboardingStepsEnum.SUITABILITY.value: self.user_suitability_step(),
@@ -102,10 +121,6 @@ class OnboardingStepBuilder:
             OnboardingStepsEnum.ELECTRONIC_SIGNATURE.value: self.user_electronic_signature_step(),
             OnboardingStepsEnum.FINISHED.value: self.onboarding_is_finished(),
             OnboardingStepsEnum.CURRENT.value: self.get_current_step().value,
+            OnboardingFraudEnum.OBJECT_WRAP_NAME.value: self.get_is_approved().value,
         }
-
-        bureau_status = self.__user.get_bureau_status()
-        if bureau_status == CAFStatus.REFUSED.value:
-            onboarding_steps[OnboardingStepsEnum.CURRENT.value] = bureau_status
-
         return onboarding_steps
