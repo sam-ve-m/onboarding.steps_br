@@ -38,9 +38,6 @@ class User:
         has_complementary_data = marital
         return has_complementary_data
 
-    def has_document_validated(self) -> bool:
-        return True  # TODO: Ver se ainda é necessário
-
     def has_validated_data(self) -> bool:
         has_validated_data = self.__bureau_status_validated is not None
         return has_validated_data
