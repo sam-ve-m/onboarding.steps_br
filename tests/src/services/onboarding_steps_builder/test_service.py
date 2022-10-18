@@ -5,7 +5,8 @@ from src.domain.user.model import User
 from src.services.onboarding_steps_builder.service import OnboardingStepBuilder
 
 
-def test_get_is_approved_when_reproved_and_approved():
+@patch.object(OnboardingFraudStatusEnum, "__gt__", return_value=False)
+def test_get_is_approved_when_reproved_and_approved(mock_comparison):
     user = User(user_document={
         "bureau_validations": {
         "cpf": "REPROVADO",
@@ -14,6 +15,9 @@ def test_get_is_approved_when_reproved_and_approved():
     })
     builder = OnboardingStepBuilder(user)
     result = builder.get_is_approved()
+    mock_comparison.assert_called_once_with(
+        OnboardingFraudStatusEnum.REPROVED
+    )
     assert result == OnboardingFraudStatusEnum.REPROVED
 
 
