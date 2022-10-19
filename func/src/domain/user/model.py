@@ -1,4 +1,5 @@
-from src.domain.enums.caf.status import CAFStatus
+from src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
+from src.domain.enums.fraud.status.bureau.enum import BureauStatus
 
 
 class User:
@@ -12,6 +13,10 @@ class User:
         self.__bureau_status = user_document.get("bureau_status")
         self.__bureau_status_validated = user_document.get("is_bureau_data_validated")
         self.__electronic_signature = user_document.get("electronic_signature")
+        bureau_validations = user_document.get("bureau_validations", {})
+        self.__fraud_validation_cpf = bureau_validations.get("cpf")
+        self.__fraud_validation_score = bureau_validations.get("score")
+        self.__fraud_validation_blocklist = bureau_validations.get("blocklist")
 
     def get_bureau_status(self):
         return self.__bureau_status
@@ -40,3 +45,23 @@ class User:
     def has_eletronic_signature(self) -> bool:
         has_electronic_signature = self.__electronic_signature is not None
         return has_electronic_signature
+
+    @property
+    def cpf_validation_status(self) -> OnboardingFraudStatusEnum:
+        if not self.__fraud_validation_cpf:
+            return OnboardingFraudStatusEnum.PENDING
+        bureau_status = BureauStatus[self.__fraud_validation_cpf]
+        return OnboardingFraudStatusEnum[bureau_status.value]
+
+    @property
+    def score_validation_status(self) -> OnboardingFraudStatusEnum:
+        if not self.__fraud_validation_score:
+            return OnboardingFraudStatusEnum.PENDING
+        bureau_status = BureauStatus[self.__fraud_validation_score]
+        return OnboardingFraudStatusEnum[bureau_status.value]
+
+    @property
+    def blocklist_validation_status(self) -> OnboardingFraudStatusEnum:
+        if not self.__fraud_validation_blocklist:
+            return OnboardingFraudStatusEnum.PENDING
+        return OnboardingFraudStatusEnum[self.__fraud_validation_blocklist]

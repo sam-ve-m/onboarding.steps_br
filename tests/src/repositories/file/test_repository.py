@@ -80,11 +80,15 @@ async def test_user_file_exists_when_file_not_exists(monkeypatch):
 
 
 @mark.asyncio
-async def test_user_file_exists_exception(monkeypatch):
-    with pytest.raises(Exception):
-        result = await FileRepository.user_file_exists(
-            file_type=user_file_type_stub, unique_id="", bucket_name=bucket_name_stub
-        )
+async def test_user_file_exists_when_objects_not_return(monkeypatch):
+    monkeypatch.setattr(FilterMock, "iteration", 2)
+    monkeypatch.setattr(S3Infrastructure, "get_resource", InfraMock)
+    result = await FileRepository.user_file_exists(
+        file_type=user_file_type_stub,
+        unique_id=unique_id_stub,
+        bucket_name=bucket_name_stub,
+    )
+    assert result is False
 
 
 def test_validate_file_type():
