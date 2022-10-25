@@ -117,17 +117,3 @@ def test_score_validation_status_none():
     fake_instance._User__fraud_validation_score = None
     result = User.score_validation_status.fget(fake_instance)
     assert result == OnboardingFraudStatusEnum.PENDING
-
-
-def test_blocklist_validation_status(monkeypatch):
-    mocked_fraud_enum = MagicMock()
-    monkeypatch.setattr(OnboardingFraudStatusEnum, "_member_map_", mocked_fraud_enum)
-    fake_instance._User__fraud_validation_blocklist = True
-    result = User.blocklist_validation_status.fget(fake_instance)
-    assert result == mocked_fraud_enum[fake_instance._User__fraud_validation_blocklist]
-
-
-def test_blocklist_validation_status_none():
-    fake_instance._User__fraud_validation_blocklist = None
-    result = User.blocklist_validation_status.fget(fake_instance)
-    assert result == OnboardingFraudStatusEnum.PENDING

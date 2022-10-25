@@ -59,9 +59,3 @@ class User:
             return OnboardingFraudStatusEnum.PENDING
         bureau_status = BureauStatus[self.__fraud_validation_score]
         return OnboardingFraudStatusEnum[bureau_status.value]
-
-    @property
-    def blocklist_validation_status(self) -> OnboardingFraudStatusEnum:
-        if not self.__fraud_validation_blocklist:
-            return OnboardingFraudStatusEnum.PENDING
-        return OnboardingFraudStatusEnum[self.__fraud_validation_blocklist]
