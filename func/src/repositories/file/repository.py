@@ -19,15 +19,11 @@ class FileRepository:
         cls._validate_file_type(file_type=file_type)
         prefix = await cls._resolve_user_path(unique_id=unique_id, file_type=file_type)
 
-        objects = None
         async with cls.infra.get_resource() as s3_resource:
             bucket = await s3_resource.Bucket(bucket_name)
             async for s3_object in bucket.objects.filter(Prefix=prefix):
-                objects = s3_object
-
-        exists_selfie = bool(objects)
-
-        return exists_selfie
+                return bool(s3_object)
+        return False
 
     @classmethod
     def _validate_file_type(cls, file_type: Enum):
