@@ -85,12 +85,9 @@ class OnboardingStepBuilder:
             self.__user.score_validation_status,
         )
 
-    def get_blocklist_status(self) -> OnboardingFraudStatusEnum:
-        return self.__user.blocklist_validation_status
-
-    def get_is_approved(self) -> OnboardingFraudStatusEnum:
+    @staticmethod
+    def get_is_approved(*anti_fraud_validations: OnboardingFraudStatusEnum) -> OnboardingFraudStatusEnum:
         status = OnboardingFraudStatusEnum.APPROVED
-        anti_fraud_validations = [self.get_bureaux_status(), self.get_blocklist_status()]
         for fraud_status in anti_fraud_validations:
             if fraud_status == OnboardingFraudStatusEnum.REPROVED:
                 return OnboardingFraudStatusEnum.REPROVED
@@ -98,6 +95,9 @@ class OnboardingStepBuilder:
         return status
 
     async def build(self, selfie_exists: bool) -> dict:
+        is_approved = self.get_is_approved(
+            self.get_bureaux_status(),
+        )
         onboarding_steps = {
             OnboardingStepsEnum.SUITABILITY.value: self.user_suitability_step(),
             OnboardingStepsEnum.IDENTIFIER_DATA.value: self.user_identifier_step(),
@@ -107,6 +107,6 @@ class OnboardingStepBuilder:
             OnboardingStepsEnum.ELECTRONIC_SIGNATURE.value: self.user_electronic_signature_step(),
             OnboardingStepsEnum.FINISHED.value: self.onboarding_is_finished(),
             OnboardingStepsEnum.CURRENT.value: self.get_current_step().value,
-            OnboardingFraudEnum.OBJECT_WRAP_NAME.value: self.get_is_approved().value,
+            OnboardingFraudEnum.OBJECT_WRAP_NAME.value: is_approved.value,
         }
         return onboarding_steps
