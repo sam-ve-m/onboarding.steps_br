@@ -11,6 +11,7 @@ class User:
         self.__cel_phone = user_document.get("phone")
         self.__marital_status = user_document.get("marital")
         self.__bureau_status = user_document.get("bureau_status")
+        self.__origin = user_document.get("origin")
         self.__bureau_status_validated = user_document.get("is_bureau_data_validated")
         self.__electronic_signature = user_document.get("electronic_signature")
         bureau_validations = user_document.get("bureau_validations", {})
@@ -20,6 +21,9 @@ class User:
 
     def get_bureau_status(self):
         return self.__bureau_status
+
+    def get_origin(self):
+        return self.__origin
 
     def has_suitability(self) -> bool:
         suitability = self.__suitability_profile is not None

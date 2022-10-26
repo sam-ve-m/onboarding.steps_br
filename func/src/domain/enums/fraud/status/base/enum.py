@@ -8,22 +8,30 @@ class OnboardingFraudStatusEnum(Enum):
 
     def __gt__(self, other):
         if (
-            self != OnboardingFraudStatusEnum.REPROVED and
-            other == OnboardingFraudStatusEnum.REPROVED
-        ) or (
-            self == OnboardingFraudStatusEnum.APPROVED and
-            other != OnboardingFraudStatusEnum.APPROVED
-        ) or (self == other):
+            (
+                self != OnboardingFraudStatusEnum.REPROVED
+                and other == OnboardingFraudStatusEnum.REPROVED
+            )
+            or (
+                self == OnboardingFraudStatusEnum.APPROVED
+                and other != OnboardingFraudStatusEnum.APPROVED
+            )
+            or (self == other)
+        ):
             return False
         return True
 
     def __lt__(self, other):
         if (
-            self == OnboardingFraudStatusEnum.REPROVED and
-            other != OnboardingFraudStatusEnum.REPROVED
-        ) or (
-            self != OnboardingFraudStatusEnum.APPROVED and
-            other == OnboardingFraudStatusEnum.APPROVED
-        ) or (self == other):
+            (
+                self == OnboardingFraudStatusEnum.REPROVED
+                and other != OnboardingFraudStatusEnum.REPROVED
+            )
+            or (
+                self != OnboardingFraudStatusEnum.APPROVED
+                and other == OnboardingFraudStatusEnum.APPROVED
+            )
+            or (self == other)
+        ):
             return False
         return True
