@@ -1,9 +1,6 @@
-import asyncio
-
 from decouple import config
 
 from src.domain.enums.file.selfie_file import UserSelfie
-from src.domain.enums.file.user_file import UserDocument
 from src.repositories.file.repository import FileRepository
 from src.repositories.user.repository import UserRepository
 from src.services.onboarding_steps_builder.service import OnboardingStepBuilder

@@ -1,3 +1,5 @@
+from decouple import config
+
 from src.domain.enums.fraud.onboarding_steps import OnboardingFraudEnum
 from src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
 from src.domain.enums.onboarding_steps.onboarding_steps import OnboardingStepsEnum
@@ -85,9 +87,14 @@ class OnboardingStepBuilder:
             self.__user.score_validation_status,
         )
 
-    @staticmethod
-    def get_is_approved(*anti_fraud_validations: OnboardingFraudStatusEnum) -> OnboardingFraudStatusEnum:
+    def get_is_approved(
+        self, *anti_fraud_validations: OnboardingFraudStatusEnum
+    ) -> OnboardingFraudStatusEnum:
         status = OnboardingFraudStatusEnum.APPROVED
+        bypass_origin_list = config("BYPASS_ANTI_FRAUD_BY_ORIGIN").split(",")
+        user_origin = self.__user.get_origin()
+        if user_origin in bypass_origin_list:
+            return status
         for fraud_status in anti_fraud_validations:
             if fraud_status == OnboardingFraudStatusEnum.REPROVED:
                 return OnboardingFraudStatusEnum.REPROVED
