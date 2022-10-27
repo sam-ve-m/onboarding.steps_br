@@ -94,7 +94,12 @@ def test_cpf_validation_status(monkeypatch):
     monkeypatch.setattr(OnboardingFraudStatusEnum, "_member_map_", mocked_fraud_enum)
     fake_instance._User__fraud_validation_cpf = True
     result = User.cpf_validation_status.fget(fake_instance)
-    assert result == mocked_fraud_enum[mocked_status_enum[fake_instance._User__fraud_validation_cpf].value]
+    assert (
+        result
+        == mocked_fraud_enum[
+            mocked_status_enum[fake_instance._User__fraud_validation_cpf].value
+        ]
+    )
 
 
 def test_cpf_validation_status_none():
@@ -110,7 +115,12 @@ def test_score_validation_status(monkeypatch):
     monkeypatch.setattr(OnboardingFraudStatusEnum, "_member_map_", mocked_fraud_enum)
     fake_instance._User__fraud_validation_score = True
     result = User.score_validation_status.fget(fake_instance)
-    assert result == mocked_fraud_enum[mocked_status_enum[fake_instance._User__fraud_validation_score].value]
+    assert (
+        result
+        == mocked_fraud_enum[
+            mocked_status_enum[fake_instance._User__fraud_validation_score].value
+        ]
+    )
 
 
 def test_score_validation_status_none():

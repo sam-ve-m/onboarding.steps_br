@@ -24,7 +24,9 @@ async def test_find_user(get_collection_mock, mocked_logger):
 @patch.object(User, "__init__", return_value=None)
 @patch.object(Gladsheim, "error")
 @patch.object(UserRepository, "_UserRepository__get_collection")
-async def test_find_user_when_not_found(get_collection_mock, mocked_logger, mocked_model):
+async def test_find_user_when_not_found(
+    get_collection_mock, mocked_logger, mocked_model
+):
     collection_mock = AsyncMock()
     collection_mock.find_one.return_value = None
     get_collection_mock.return_value = collection_mock

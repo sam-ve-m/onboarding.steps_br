@@ -34,5 +34,3 @@ async def test_get_session(mocked_env, monkeypatch):
     )
     mocked_env.assert_called()
     S3Infrastructure.client = None
-
-
