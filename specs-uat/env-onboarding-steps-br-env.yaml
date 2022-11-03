@@ -64,5 +64,5 @@ spec:
         - name: ASGI_FRAMEWORK
           value: "HYPERCORN"
         - name: BYPASS_ANTI_FRAUD_BY_ORIGIN
-        - value: "picpay"
+          value: "picpay"
   version: 3
