@@ -1,9 +1,9 @@
 from unittest.mock import patch
 from decouple import AutoConfig
 
-from src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
-from src.domain.user.model import User
-from src.services.onboarding_steps_builder.service import OnboardingStepBuilder
+from func.src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
+from func.src.domain.user.model import User
+from func.src.services.onboarding_steps_builder.service import OnboardingStepBuilder
 
 
 @patch.object(AutoConfig, "__call__", return_value="picpay")

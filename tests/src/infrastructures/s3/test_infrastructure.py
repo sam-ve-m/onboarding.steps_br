@@ -4,7 +4,7 @@ import aioboto3
 import pytest
 from decouple import AutoConfig
 
-from src.infrastructures.s3.infrastructure import S3Infrastructure
+from func.src.infrastructures.s3.infrastructure import S3Infrastructure
 
 dummy_env = "env"
 

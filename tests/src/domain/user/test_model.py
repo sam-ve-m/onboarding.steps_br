@@ -2,9 +2,9 @@ from unittest.mock import MagicMock
 
 from pytest_steps import test_steps
 
-from src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
-from src.domain.enums.fraud.status.bureau.enum import BureauStatus
-from src.domain.user.model import User
+from func.src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
+from func.src.domain.enums.fraud.status.bureau.enum import BureauStatus
+from func.src.domain.user.model import User
 
 fake_instance = MagicMock()
 

@@ -1,35 +1,35 @@
 include:
-- ./func/*
+- fission.py
 kind: ArchiveUploadSpec
-name: func-bvlh
+name: fission-py-uknt
 
 ---
 apiVersion: fission.io/v1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: onboarding-steps-br-fn-bd3fd88d-1ca6-451b-86ba-aa66dd50de2f
+  name: onboarding-br-steps-fn-aafc9077-f407-4139-be4f-b76ba15f0748
   namespace: default
 spec:
   deployment:
     checksum: {}
+    type: url
+    url: archive://fission-py-uknt
   environment:
-    name: onboarding-steps-br-env
+    name: onboarding-br-steps-env
     namespace: default
   source:
     checksum: {}
-    type: url
-    url: archive://func-bvlh
 status:
-  buildstatus: pending
-  lastUpdateTimestamp: "2022-06-27T19:42:11Z"
+  buildstatus: none
+  lastUpdateTimestamp: "2023-01-03T19:09:41Z"
 
 ---
 apiVersion: fission.io/v1
 kind: Function
 metadata:
   creationTimestamp: null
-  name: onboarding-steps-br-fn
+  name: onboarding-br-steps-fn
   namespace: default
 spec:
   InvokeStrategy:
@@ -38,18 +38,24 @@ spec:
       MaxScale: 3
       MinScale: 1
       SpecializationTimeout: 120
-      TargetCPUPercent: 80
+      TargetCPUPercent: 0
+      hpaMetrics:
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 80
+            type: Utilization
+        type: Resource
     StrategyType: execution
   concurrency: 500
   environment:
-    name: onboarding-steps-br-env
+    name: onboarding-br-steps-env
     namespace: default
   functionTimeout: 60
   idletimeout: 120
   package:
-    functionName: main.get_onboarding_step_br
     packageref:
-      name: onboarding-steps-br-fn-bd3fd88d-1ca6-451b-86ba-aa66dd50de2f
+      name: onboarding-br-steps-fn-aafc9077-f407-4139-be4f-b76ba15f0748
       namespace: default
-  requestsPerPod: 100000
+  requestsPerPod: 10000
   resources: {}

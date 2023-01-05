@@ -1,4 +1,4 @@
-from src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
+from func.src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
 
 
 def test_relation_with_approved_and_reproved():

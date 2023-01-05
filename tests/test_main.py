@@ -13,8 +13,8 @@ with patch.object(RepositoryEnv, "__init__", return_value=None):
                 from etria_logger import Gladsheim
                 from heimdall_client.bifrost import Heimdall
                 from heimdall_client.bifrost import HeimdallStatusResponses
-                from main import get_onboarding_step_br
-                from src.services.onboarding_steps.service import OnboardingSteps
+                from func.main import get_onboarding_step_br
+                from func.src.services.onboarding_steps.service import OnboardingSteps
 
 decoded_jwt_ok = {
     "is_payload_decoded": True,

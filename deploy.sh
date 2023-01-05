@@ -1,5 +1,5 @@
 #!/bin/bash
 fission spec init
-fission env create --spec --name onboarding-steps-br-env --image nexus.sigame.com.br/fission-async:0.1.6 --builder nexus.sigame.com.br/fission-builder-3.8:0.0.1
-fission fn create --spec --name onboarding-steps-br-fn --env onboarding-steps-br-env --src "./func/*" --entrypoint main.get_onboarding_step_br  --rpp 100000
-fission route create --spec --method GET --url /onboarding_steps_br --function onboarding-steps-br-fn
+fission env create --spec --name onboarding-br-steps-env --image nexus.sigame.com.br/fission-onboarding-br-steps:0.1.0 --poolsize 0 --version 3 --imagepullsecret "nexus-v3" --spec
+fission fn create --spec --name onboarding-br-steps-fn --env onboarding-br-steps-env --code fission.py --targetcpu 80 --executortype newdeploy --maxscale 3 --requestsperpod 10000 --spec
+fission route create --spec --method GET --url /onboarding/steps_br --function onboarding-br-steps-fn
