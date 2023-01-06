@@ -8,7 +8,7 @@ spec:
   createingress: false
   functionref:
     functionweights: null
-    name: onboarding-br-steps-fn
+    name: onb-br-steps-fn
     type: name
   host: ""
   ingressconfig:

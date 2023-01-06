@@ -2,7 +2,7 @@ apiVersion: fission.io/v1
 kind: Environment
 metadata:
   creationTimestamp: null
-  name: onboarding-br-steps-env
+  name: onb-br-steps-env
   namespace: default
 spec:
   builder:
@@ -16,10 +16,10 @@ spec:
     container:
       name: ""
       resources: {}
-    image: nexus.sigame.com.br/fission-onboarding-br-steps:0.1.1
+    image: nexus.sigame.com.br/fission-onboarding-br-steps:0.1.2
     podspec:
       containers:
-      - name: onboarding-br-steps-env
+      - name: onb-br-steps-env
         env:
         - name: AWS_BUCKET_USERS_FILES
           value: "dtvm-users-files-uat"

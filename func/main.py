@@ -19,6 +19,7 @@ async def get_onboarding_step_br(request: Request = request) -> Response:
             jwt=x_thebes_answer
         )
         if heimdall_status != HeimdallStatusResponses.SUCCESS:
+            Gladsheim.error(heimdall_status=heimdall_status)
             raise UnauthorizedError()
 
         payload = jwt_content["decoded_jwt"]

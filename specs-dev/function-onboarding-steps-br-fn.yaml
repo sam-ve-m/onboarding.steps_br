@@ -8,7 +8,7 @@ apiVersion: fission.io/v1
 kind: Package
 metadata:
   creationTimestamp: null
-  name: onboarding-br-steps-fn-aafc9077-f407-4139-be4f-b76ba15f0748
+  name: onb-br-steps-fn-aafc9077-f407-4139-be4f-b76ba15f0748
   namespace: default
 spec:
   deployment:
@@ -16,7 +16,7 @@ spec:
     type: url
     url: archive://fission-py-uknt
   environment:
-    name: onboarding-br-steps-env
+    name: onb-br-steps-env
     namespace: default
   source:
     checksum: {}
@@ -29,7 +29,7 @@ apiVersion: fission.io/v1
 kind: Function
 metadata:
   creationTimestamp: null
-  name: onboarding-br-steps-fn
+  name: onb-br-steps-fn
   namespace: default
 spec:
   InvokeStrategy:
@@ -49,13 +49,13 @@ spec:
     StrategyType: execution
   concurrency: 500
   environment:
-    name: onboarding-br-steps-env
+    name: onb-br-steps-env
     namespace: default
   functionTimeout: 60
   idletimeout: 120
   package:
     packageref:
-      name: onboarding-br-steps-fn-aafc9077-f407-4139-be4f-b76ba15f0748
+      name: onb-br-steps-fn-aafc9077-f407-4139-be4f-b76ba15f0748
       namespace: default
   requestsPerPod: 10000
   resources: {}
