@@ -1,9 +1,9 @@
 from decouple import config
 
-from src.domain.enums.file.selfie_file import UserSelfie
-from src.repositories.file.repository import FileRepository
-from src.repositories.user.repository import UserRepository
-from src.services.onboarding_steps_builder.service import OnboardingStepBuilder
+from func.src.domain.enums.file.selfie_file import UserSelfie
+from func.src.repositories.file.repository import FileRepository
+from func.src.repositories.user.repository import UserRepository
+from func.src.services.onboarding_steps_builder.service import OnboardingStepBuilder
 
 
 class OnboardingSteps:

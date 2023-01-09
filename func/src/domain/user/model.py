@@ -1,5 +1,5 @@
-from src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
-from src.domain.enums.fraud.status.bureau.enum import BureauStatus
+from func.src.domain.enums.fraud.status.base.enum import OnboardingFraudStatusEnum
+from func.src.domain.enums.fraud.status.bureau.enum import BureauStatus
 
 
 class User:

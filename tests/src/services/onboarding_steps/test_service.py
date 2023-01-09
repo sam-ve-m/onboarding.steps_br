@@ -3,10 +3,10 @@ from unittest.mock import patch
 from decouple import AutoConfig
 from pytest import mark
 
-from src.domain.user.model import User
-from src.repositories.file.repository import FileRepository
-from src.repositories.user.repository import UserRepository
-from src.services.onboarding_steps.service import OnboardingSteps
+from func.src.domain.user.model import User
+from func.src.repositories.file.repository import FileRepository
+from func.src.repositories.user.repository import UserRepository
+from func.src.services.onboarding_steps.service import OnboardingSteps
 
 payload_dummy = {"user": {"unique_id": "test"}}
 user_document_dummy = {
